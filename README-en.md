@@ -59,7 +59,7 @@ flowchart TD
 - Built-in lightweight visual workflow orchestration; configurable product, coding, testing, deployment stages
 - Integrates multiple LLM coding capabilities; outputs plugin code, manually revised before committing to Git
 - **Controlled self-boot**: AI-produced tools / workflows go through approval-based promotion, versioning, and rollback — freedom to evolve and governance control are two sides of one coin
-- Humans in the loop: self-boot promotion / process advancement / rule revision / artifact merging all have approval gates; responsibility currently rests with humans, transferable as AI capability rises
+- Humans in the loop: self-boot promotion / process advancement / rule revision / artifact merging all have approval gates; responsibility currently rests with humans, transferable as AI capability rises — attribution decided by cost and the capability function, computable
 - **Goals and evaluation**: tasks/goals declare measurable completion conditions, paired with an independent evaluator separate from the executor — generator/evaluator separation; promotion only upon achievement
 - Supports external knowledge bases, RAG, graph databases, and object storage
 - Business domains can be added on demand; supports evolution toward distributed cluster scenarios
@@ -83,7 +83,7 @@ flowchart TD
 - **Single-Java modular monolith**: Spring Boot 3.5 + Java 17 — one process carrying governance / business / execution / orchestration / RAG / IM, horizontally scalable as a cluster
 - **Self-boot mechanism (code-as-institution)**: coding tools via **harness hot-plug**; AI-produced real code (Go) → TinyGo → WASM → approval → **Extism + Endive sandbox hot-plug** (phase 1 pure-Java, zero native dependencies)
 - Storage: OLTP, OLAP, document stores, Neo4j graph DB, MinIO object storage
-- LLM cost/usage management: model routing, key pool, token accounting, cost reports (carries whitepaper §3.1.4 usage cost)
+- LLM cost/usage management: model routing, key pool, token accounting, cost reports — including decision-safety cost (verification/approval overhead for low-risk safe outward decisions; carries §3.1.4)
 - Integration: IM / email systems, RAG, Git, LLM APIs, Penpot (open-source UI design)
 
 ## 🚧 Roadmap
