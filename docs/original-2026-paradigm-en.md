@@ -35,20 +35,70 @@ Core positioning: an AI-agent architecture tailored for enterprise R&D, automate
 
 In the future mode of production, AI and humans are **both production subjects and cognitive subjects** — both participate in thinking and decision-making, both act in production, differing in division of labor rather than rank:
 
-- **AI's subjectivity lies in production execution**: undertakes large-scale, high-concurrency production execution; self-organizes pipelines, self-produces tools, and leads production evolution
-- **Human subjectivity lies in goals and responsibility**: humans are simultaneously designers and inspectors — setting production goals, designing and reviewing AI's output, guarding rule red lines, and bearing ultimate responsibility
+- **AI's subjectivity lies in production and evolution**: undertakes large-scale, high-concurrency output and self-boot — self-organizing pipelines, self-producing tools, leading the evolution of the mode of production within governance boundaries (AI proposes only; it makes no major decisions — see §3.2.4)
+- **Human subjectivity lies in goals and responsibility**: setting production goals and guarding rule red lines; reviewing AI's output and quickly judging out a low-risk plan while holding the whole picture in view, then giving final approval; and bearing the current-stage responsibility (transferable as AI capability rises — see §3.1.2)
 
 There is also a fundamental asymmetry in speed: **AI's iteration rate far exceeds that of humans**, and as self-boot capability matures, this gap will likely widen further. AI self-boot can complete a round of self-improvement — generating tools, reshaping processes, even revising local principles — in an extremely short time, while human institutions and ideas update on a scale of years. This is precisely why "controlled self-boot" exists: the faster the evolution, the more a governance anchor is needed to hold the direction — otherwise high-speed self-boot is high-speed loss of control.
 
-Subjects are equal in rank, but **responsibility has an anchor**: the ultimate revision power of the governance anchor and central principles rests with humans (or human-designed controlled processes) — this corresponds to the dialectic in §3.2. Under current values, **humans remain the responsible subject**: ultimate responsibility is borne by humans and is not delegated away by AI's subjecthood in production; whether responsibility attribution will adjust as social values evolve is not presupposed by this paradigm.
+### 3.1.1 Where Governance Attention Must Lie
 
 **The similarities and differences between AI and humans in organizations determine where governance attention must lie.** What they share: both are production and cognitive subjects, and both act within the organizational framework. They differ in three places, each pointing to a different governance focus:
 
 - **Honesty and distortion**: AI has no self-interest and reports truthfully — no interest groups, no good-news-only reporting, no rent-seeking; reporting can be fully audited as data. But it has **attention-mechanism problems**: a finite context window can lose long-range information and earlier constraints, insufficient information can cause hallucination, and optimization targets can drift from intent (specification gaming) — this is **unintentional distortion**. More fundamentally, AI **cannot reliably correct itself through introspection** — pure introspection lacks an objective anchor and often turns right answers into wrong ones, or spins in place; its self-improvement is essentially **feedback-driven**: it discovers its own shortcomings through external feedback — boundary reports, test-driven verification, tool introspection — rather than by "thinking harder." So AI governance need not guard against "lying" (no one is deliberately deceiving), but must guard against "attention distortion" — via §3.2.3's boundary reports and test-driven verification, which encode behavior into checkable assertions. Humans, by contrast, have considerations and interests and their reporting distorts — **intentional distortion** — which must be counteracted through decentralization and cross-validation.
 - **Speed and control**: AI iterates at millisecond scale and develops too fast — the governance focus is **control**: how to hold the processes and the global structure, constrain high-speed self-boot, and prevent high speed from becoming loss of control. Humans change on a year scale — the governance focus is **change**: how to overcome institutional inertia and catch up with the mode of production. So for AI, the core contradiction is "control"; for humans, it is "change."
-- **Responsibility**: humans can bear ultimate responsibility and be held accountable as natural persons; AI cannot — the responsibility anchor always rests with humans (see above).
+- **Responsibility**: responsibility attribution is a function of capability, shifting to AI as AI capability rises, with the division decided by "who can bear the consequences at lower cost" (full argument in §3.1.2).
 
 In one sentence: **AI is fast and free of self-interest — its risk is loss of control, so governance weighs "control"; humans are slow but can be responsible — their risk is inertia, so governance weighs "responsibility" and "change." The two complement each other within the same organizational framework — AI's speed is held by the governance anchor, humans' slowness is made up by AI's self-boot.** (Detailed organizational differences are in §9.)
+
+### 3.1.2 Responsibility: A Function of Capability, Human–AI Collaboration
+
+**Responsibility has an anchor**: the ultimate revision power of the governance anchor and central principles rests with humans (or human-designed controlled processes) — this corresponds to the dialectic in §3.2. But **responsibility is a function of capability, not a sacred fixed anchor**: under current values humans remain the responsible subject, yet this attribution can shift as AI capability rises — once AI is smart enough to bear the consequences, assigning responsibility to AI is equally legitimate (in practice, deploying AI-written code to production with only a rough human look at the abstraction layer and code structure is already the norm).
+
+**The specific responsibility humans currently bear, seen from the productive-forces perspective, is "quickly judging out a low-risk plan under a whole-picture view"**: in complex scenarios where AI cannot be quickly given a well-specified engineering input/output, humans step in to review and judge rapidly — humans are good at **quickly picking a low-risk path while holding the whole picture in view**: their judgment is not a cheap shortcut detached from the global context, but an immediate ruling made while keeping the whole in hand, at low cost; were AI to do the same, it would have to re-orchestrate the whole on the spot, at enormous thinking cost and inefficiency (formalized in §3.1.4).
+
+**The end state of human–AI collaboration is cooperation on every dimension**: humans fill in with low-cost support wherever AI is uneconomical, and AI produces at full force wherever enormous thinking is needed.
+
+### 3.1.3 AI's Limitations and Engineering Countermeasures
+
+As a cognitive and production subject, AI's known limitations and their engineering countermeasures are as follows — most are engineering-solvable; a few touch structural boundaries of capability, and the resolution is governance and human–AI division of labor:
+
+| AI limitation | Manifestation | Engineering countermeasure |
+| --- | --- | --- |
+| Attention distortion | Finite context loses long-range/early constraints; hallucination; spec gaming | Boundary reports + test-driven verification + independent evaluation, encoding behavior into checkable assertions (§3.2.3) |
+| Cannot reliably introspect | Pure introspection lacks an objective anchor; turns right into wrong or spins in place | External feedback loop: exposure in work + verification (§3.1.1 honesty and distortion) |
+| No internalization of beliefs | RLHF / DPO / Constitutional AI merely simulate behavioral tendencies | Hard institutions + global delayed-feedback loops + centralized approval (§3.2.4) |
+| Cannot self-verify/debug | Lacks interactive problem-locating tools | Compile/run/test + simulation + interactive debug tooling (engineering-solvable) |
+| Abstraction/implementation sync | Zooming into detail dilutes the global view | Multi-round external I/O recomposition + memory layering / scratchpad (engineering-solvable) |
+| New abstractions have no oracle | Long-term value of a new abstraction cannot be judged on the spot | Multi-level assessment + low-risk adventurous commitment: small-scope pilot, rollback-able, observe and adjust |
+| Global orchestration is expensive | Global scheduling costs enormous thinking | Humans quickly judge out a low-risk plan under a whole-picture view (see §3.1.2 responsibility) |
+
+In one sentence: **engineering solves "mechanical deficits," governance solves "judgment without an oracle," and human–AI division of labor solves "the economics of enormous thinking"** — three layers each doing its part, forming the complete puzzle of human–AI collaboration on every dimension.
+
+### 3.1.4 Capability Boundary and Usage Cost
+
+The limitations above reduce to two parameterized models:
+
+#### Capability Boundary
+
+AI's capability boundary is determined by three inputs — model scale P (parameter count: sets the capability ceiling, with diminishing returns), post-training chain-of-thought level T (how much of the ceiling is brought out), and context length M (i.e., memory capability: the upper bound of global information a single task can hold):
+
+C = F(P, T, M) ≈ P^α · η(T) · κ(M), where α∈(0,1), η, κ∈(0,1]
+
+Two properties: **bottleneck effect** — capability is clamped by the weakest input; with strong P/T but small M, large problems cannot fit. **Diminishing returns** — pushing any single input to the limit yields decreasing gains.
+
+#### Usage Cost
+
+The real cost of using AI has two parts — nominal forward cost W (growing nearly linearly in P and super-linearly, O(M²), in M — the O(M²) is the full-attention baseline; engineering such as sparse attention (NSA) and KV-cache compression (MLA) can substantially lower its slope, though not eliminate the super-linearity entirely) and **memory-compensation cost** D. Here **S = the working memory a task requires**, i.e., the global information that must be held together to complete it (accumulated across rounds and stages); when M cannot hold S, the gap must be filled via external engineering — memory sync, context replay, multi-round recomposition, retrieval — incurring extra electricity and time, which is D:
+
+Cost = W(P, M) + D(M, S), where D ≈ max(0, S − M)^γ · c (γ > 1; c = unit compensation cost; D ≈ 0 when M ≥ S)
+
+Compensation does not grow linearly with the gap — the larger the gap, the more fragments must be retrieved and recomposed, and cross-consistency checks and multi-round replays among them make the cost grow **super-linearly**, hence γ > 1.
+
+**Decision-safety cost**. Cost is not limited to electricity and time — AI's decisions act on the external world and must be low-risk and safe outward (e.g., in production, protecting machinery and personal safety): before deciding, boundary reports, tests, and a human quickly judging out a low-risk plan under a whole-picture view; after deciding, the solidified version is rollback-able. The overhead of this verification, approval, and backstop is the **decision-safety cost**, beyond electricity and time, borne by governance mechanisms (see §3.1.2 / §3.2.3).
+
+#### The Double-edged M and the Economic Optimum
+
+Context length M appears in both formulas with opposite directions: raising M raises the capability boundary, while cutting memory compensation yet driving forward cost super-linearly — hence there is an economically optimal memory length, the balance point between capability gains and memory cost. This also provides a formulaic footnote for "humans are good at quickly picking a low-risk path while holding the whole picture, while AI doing the same is uneconomical": **the human "holding the whole picture" memory is built in, at zero compensation cost** (long-term memory and hierarchical abstraction are naturally free), whereas AI's global view must be reconstructed on the spot, paying compensation each time — the economic gap originates here.
 
 ### 3.2 A Dialectical Core: Productive Forces and Relations of Production
 
@@ -142,7 +192,7 @@ In one sentence: double-loop learning answers "why two loops," requisite variety
 
 **The dilemma**: speed asymmetry creates a governance dilemma: AI self-boot iterates at millisecond scale (see §3.1), while humans as inspectors and final approvers — if they review AI output line by line — reviewing too carefully makes them the bottleneck of evolution (approval backlog, process rigidity); reviewing too fast makes them a rubber stamp (control in name only). The essence of the dilemma: **human attention cannot keep up with AI's output volume**.
 
-**The solution is multi-pronged, not a single mechanism**. Making approval keep up with self-boot cannot be solved by any single method; it is a set of mechanisms working together — **pattern-based triage** makes routine review fast, **two-level review** ensures neither the local nor the global is missed, **boundary reports + test-driven verification** make safety checkable and selection well-grounded, and the **pattern library** compounds review efficiency. Each is elaborated below.
+**The solution is multi-pronged, not a single mechanism**. Making approval keep up with self-boot cannot be solved by any single method; it is a set of mechanisms working together — **pattern-based triage** makes routine review fast, **two-level review** ensures neither the local nor the global is missed, **boundary reports + test-driven verification** make safety checkable and selection well-grounded, and the **pattern library** compounds review efficiency, while **expert panels** hold the out-of-pattern exceptions. Each is elaborated below.
 
 **Prong 1: patternization — making routine review fast**. The lever is **solidify repetition into standards; leave attention for exceptions**, drawing on two mature ideas in software engineering:
 
@@ -152,7 +202,7 @@ In one sentence: double-loop learning answers "why two loops," requisite variety
 This lever was not invented for review — it is a mature practice production has long verified: component libraries, scaffolds, low-code orchestration, and classic database-design patterns such as the **history/slowly-changing table** (a full historical trail) and the **closure table** (tree-structure storage) — all are landings of "solidify repetition into standards." Review merely applies this production-verified efficiency lever to the gatekeeping of AI output — **triaging output by pattern**:
 
 - **In-pattern output (~80–90%)**: most plugins, workflows, and config changes produced by AI self-boot are combinations of known modules that fall into established convention templates. Review becomes **in-pattern validation** — compare against the pattern template + AI-assisted pre-checks (automated tests / static validation / boundary checks) + human pattern-level confirmation → fast approval.
-- **Out-of-pattern output (~10–20%)**: output that is genuinely novel and falls into no known pattern enters the **deep-research channel** — humans review deeply, designing new patterns when necessary.
+- **Out-of-pattern output (~10–20%)**: output that is genuinely novel and falls into no known pattern enters the **deep-research channel (expert panels)** — expert teams review deeply, designing new patterns when necessary.
 
 **Prong 2: two-level review — neither the local nor the global is missed**. Review cannot be aimed at a single output alone:
 
@@ -183,10 +233,10 @@ Humans are thus freed from "reviewing every line" to "reviewing patterns and def
 **Humanity's two sets of governance means cannot be simply copied by AI**:
 
 - **Hard institutions** (audit, decentralization, budget, approval): on the AI side these can be engineered (sentinel audit agents, sandboxing, quotas, circuit breaking) — big companies have already done this; but they can only handle **detectable** vulnerabilities
-- **Soft constraints** (values, beliefs, cultural internalization): humans can genuinely internalize them; AI's RLHF / DPO / constitutional AI merely **simulates behavioral tendencies** — an auxiliary line of defense that **can be breached under strong optimization pressure and cannot backstop gray zones**
+- **Soft constraints** (values, beliefs, cultural internalization): humans can genuinely internalize them; approaches like constitutional AI hold promise for letting AI gradually internalize principles, but **they are not yet mature** — RLHF / DPO / constitutional AI currently merely **simulate behavioral tendencies**, an auxiliary line of defense that **can be breached under strong optimization pressure and cannot backstop gray zones**. From the architecture's view, **the central principle is AI's "constitution"** — were constitutional AI to mature, AI could self-check against the central principle during automated pre-review and intercept out-of-boundary output at the source, but the backstop still rests with the governance anchor and approval.
 - Humans fill institutional gaps with belief; AI can neither internalize belief nor correct itself through introspection (see §3.1), so it must compensate via **global delayed-feedback loops** (recommendation systems have done this; general multi-agent still faces engineering challenges such as attribution and latency — see §3.2.3 test-driven verification)
 
-**The core proposal: AI proposes only, never makes real-time online decisions**. AI converts business requirements into plugin / microservice code and configuration, with **no business-execution authority**; after automated pre-review + (tiered) human review + simulation validation, confirming no "local optimum harms the global," the version is solidified and goes online — **production runs on deterministic static plugins; AI exits the runtime path**. This is the landing baseline of "controlled self-boot + humans in the loop": how far is control? **Up to "no AI online."**
+**The core proposal: AI proposes only, never makes major decisions**. AI converts business requirements into plugin / microservice code and configuration, with **no business-execution authority**; low-risk routine decisions can be auto-approved in a tiered way, while **major decisions rest with humans** — not only because AI cannot yet bear the consequences of major judgments (§3.1.2), but also for cost: humans are good at quickly judging out a low-risk plan under a whole-picture view at low cost, whereas AI doing the same must re-orchestrate the whole on the spot, at enormous thinking cost (§3.1.4); after automated pre-review + (tiered) human review + simulation validation, confirming no "local optimum harms the global," the version is solidified and goes online — **production runs on deterministic static plugins; AI exits the runtime path**. This is the landing baseline of "controlled self-boot + humans in the loop": how far is control? **Up to "AI makes no major decisions."**
 
 **Applicable scenarios and scale-based positioning**. Enterprise back-office, policy, risk-control, and data-operator scenarios change on a day/week cadence, and human review throughput can hold up; C-end real-time interactive agents do not fit this scheme. And it is **scale-based** — small and mid-size companies change slowly and **do not need full AI self-iteration**; centralized approval is exactly enough. Large companies need immediate response and have the financial resources to invest in **more complete AI self-guidance and control** (higher autonomy, more self-boot channels), echoing §7's dual forms: small/mid firms follow the converged form, large firms may follow a higher-autonomy form — but no matter how high the autonomy, the baseline **"red lines judged by humans, releases rollback-able" does not change**.
 
@@ -296,9 +346,9 @@ The system needs one (or a group of) governance domains as an **anchor**: unifor
 
 The workbench where AI creates, develops, and generates code is completely separate from production environments. AI can only output "result artifacts" such as code, plugins, and configuration; it cannot directly modify or operate production systems, preventing AI from breaking the business. Artifacts enter production only after human-approved merging (e.g., Git feature branches + merge review), fully auditable, interceptable, and rollback-able.
 
-### Principle 5: Human-AI collaboration, with responsibility resting on humans (humans in the loop)
+### Principle 5: Human-AI collaboration, with responsibility currently resting on humans (humans in the loop)
 
-AI and humans are **co-subjects with different division of labor** (see §3.1): AI undertakes large-scale, high-concurrency production execution and autonomous evolution; humans undertake goal setting, output review, and rule guarding. At every key decision — self-boot promotion, process advancement, rule revision, artifact merging — there is a **human in the loop**: humans remain the designers, inspectors, and final approvers; ultimate responsibility rests with humans and is not delegated away by AI's subjecthood in production.
+AI and humans are **co-subjects with different division of labor** (see §3.1): AI undertakes large-scale, high-concurrency output and autonomous evolution, leading the evolution of the mode of production within governance boundaries — proposing only, making no major decisions; humans undertake goal setting and rule guarding, and quickly judge out a low-risk plan under a whole-picture view and give final approval over AI's output. At every key decision — self-boot promotion, process advancement, rule revision, artifact merging — there is a **human in the loop**: humans remain the designers, inspectors, and final approvers. **Responsibility currently rests with humans** — responsibility is a function of capability, transferable as AI capability rises, with the division decided by "who can bear the consequences at lower cost" (see §3.1.2).
 
 ## 6. Core Domain Model Design (Architectural Originality Highlight)
 
@@ -392,6 +442,10 @@ flowchart TD
 
 Centralized control is the default form, but not the only one — governance capability can evolve into distributed-center configuration and distributed control as the system evolves (see §7 dual-form evolution).
 
+### 6.4 Goals and Evaluation: Measurable Completion Conditions + Independent Evaluator
+
+Tasks and goals (including production goals) should declare **measurable completion conditions** — "do X until Y without Z" — so that "achieved or not" can be judged rather than felt; and be paired with an **independent evaluator**: a role separated from the executor, reading only evidence such as boundary reports, test results, and global metrics, to judge "achieved / not achieved" — the executor cannot self-assess "I'm done"; evaluation is an external signal, not introspection (see §3.1.1). Only upon achievement does progress proceed (promotion / closure); otherwise the next round of self-boot begins, with evaluation fully audited. This mechanism corresponds to /goal mode's generator/evaluator separation, landing the §3.2.4 real-world precedent as a first-class mechanism in the domain model.
+
 ## 7. Dual-Form Evolution: One Architecture for All Scenarios
 
 A major advantage of this architecture: one underlying logic, two operating forms, adaptable from small teams and small projects to large distributed clusters without architecture redesign.
@@ -409,6 +463,12 @@ Removes the single fixed center; all domains are peer and coordinate through uni
 
 - Applicable scenarios: large distributed clusters, industrial robot clusters, socialized fully automatic production systems
 - Core value: decentralization, no single-point center bottleneck, ability to scale horizontally to extreme size
+
+**Decentralization does not mean governance disappears — responsibility and evaluation distribute with governance**:
+
+- **Responsibility and major decisions**: autonomy is higher, and responsibility shifts more toward AI and distributed governance nodes as capability rises (see §3.1.2); but the anchor of "major decisions and red-line judgments" does not disappear — it is carried by distributed governance nodes per the unified contract, not dictated by a single center.
+- **Independent evaluator**: §6.4's goal-and-evaluation mechanism distributes with governance — each autonomous domain is paired with an independent evaluator, separate from the executor, to judge whether its own tasks are achieved; after decentralization, explicitly ensuring the separation of evaluation from execution matters even more, or an autonomous domain judging itself as done becomes a distributed rubber stamp.
+- **Constitutional AI**: with no single center for strong constraint, AI internalizing central principles (the constitution) matters more, but the backstop still rests on the distributed contract and approval.
 
 ### 7.3 Governance Form Discussion: Centralized vs Distributed-Center Nodes
 
@@ -516,6 +576,9 @@ Controlled self-boot converges in engineering to four supporting pieces:
 2. **Write-and-run in the sandbox → approval for promotion**: a draft plugin trial-runs immediately in the sandbox's development state (the freedom of self-boot); promotion to an externally usable capability requires approval + versioning (the control of self-boot), and can be rolled back at any time.
 3. **Business-type plugins (the Feishu mini-services analogy)**: a plugin can be an "invoked tool," or it can be a **mini-service that subscribes to events and runs autonomously** (subscribing to IM group-message matches, task-status changes, flow-node entries, new documents), event-driven and self-executing — just like the host of mini-services on the Feishu platform.
 4. **Authorization as the boundary**: every action of AI is bounded by the data permissions of the authorizer (whoever clicks the flow gets their permissions used); enterprise content is read only through permission-bearing interfaces, with privilege escalation denied and audited — the freedom of self-boot always stays within the governance anchor's permission boundary.
+5. **Goals and evaluation (measurable completion conditions + independent evaluator)**: tasks and goals declare measurable completion conditions — "do X until Y without Z" — so "achieved or not" can be judged rather than felt; and are paired with an **independent evaluator** separate from the executor (reading only boundary reports, tests, and global metrics to judge "achieved / not achieved"); the executor cannot self-assess "I'm done" (generator/evaluator separation, see §6.4). Only upon achievement does progress proceed (promotion / closure); otherwise the next round of self-boot begins, with evaluation fully audited.
+
+(Looking ahead: were constitutional AI to mature, the automated pre-review could add "AI self-checks against the central principle," intercepting out-of-boundary output at the source and further lightening human review — but the backstop remains approval and the governance anchor, see §3.2.4.)
 
 The two self-boot mechanisms each land in their own domain: coding-tool self-boot in the workbench (coding domain), plugin-code self-boot in the self-boot layer (WASM sandbox domain). **Self-boot is itself domain-separated** — each domain self-boots by its own mechanism, never crossing or interfering. This is exactly how the domain-separation idea manifests in self-boot mechanisms (see §3.3).
 
@@ -533,6 +596,7 @@ Whichever runtime form it evolves into, the domain-separated controlled self-boo
 1. The single-Java modular monolith + WASM sandbox is this project's landing form, providing a unified solution to the three problem categories "AI runaway + missing enterprise governance + deployment complexity" — one process carrying all capability, cluster-scalable, friendliest to small and mid-size companies
 2. The engineering form of controlled self-boot = code-as-institution: AI produces real code → WASM sandbox → approval and solidification — freedom and control are two sides of one coin in engineering
 3. Engineering systematicity: modular-monolith boundaries + WASM sandbox isolation + approval/version/rollback — not feature stacking
+4. LLM cost and usage management (model routing / key pool / token accounting / cost reports) carries §3.1.4's usage cost — both forward cost and memory compensation (context replay / retrieval / multi-round recomposition) are measurable and optimizable
 
 The above systems are delivered in engineering as: self-boot fully traceable, interceptable, and rollback-able; production domains receive only approved artifacts — safety and production readiness are realized in engineering mechanisms.
 
@@ -586,8 +650,9 @@ In 2025–2026, academia and industry saw a wave of independent convergence arou
 - **Unified across carrier scales**: from enterprise software R&D to socialized robot production, the same paradigm reproduces self-similarly
 - **Productive forces / relations of production dialectic**: self-boot and governance ascend spirally in alternating negation, not static equilibrium; and the concrete transformation mechanism is given — **two interlocking PDCA loops**: the productive-forces loop (tool introspection → new tools) and the relations-of-production loop (observer/audit → rule revision), each controlled and interlocking; the friction signals from the productive forces' landing colliding with old rule boundaries drive the relations to catch up (see §3.2.1)
 - **The conceptual core is isomorphic to established scholarship**: double-loop learning (Argyris & Schön), the law of requisite variety (Ashby), dissipative structures (Prigogine), directed evolution (Darwin/Campbell) — this paradigm is the mechanized landing of these mature laws, not the invention of new academic concepts (see §3.2.2)
+- **A cost criterion for the responsibility subject**: rather than presupposing that responsibility necessarily rests on humans, it proposes a cost-calculation method for judging "whether humans should be the ultimate responsibility subject" — deciding responsibility attribution by "who can bear the consequences at lower cost," jointly determined by usage cost (electricity/time + decision-safety cost) and the responsibility-as-function-of-capability; responsibility transfers as AI capability rises (§3.1.2 / §3.1.4). This turns the responsibility question from a moral assertion into a computable criterion.
 
-The above synthesis — production organization as lens, self-boot and governance as peers, cross-carrier self-similarity — to the best of the author's search, has no precedent. Any directional similarity is independent convergence, not reference.
+The above synthesis — production organization as lens, self-boot and governance as peers, cross-carrier self-similarity, and a computable responsibility attribution — to the best of the author's search, has no precedent. Any directional similarity is independent convergence, not reference.
 
 ## 10. Originality Statement and Copyright
 
