@@ -445,80 +445,15 @@ flowchart LR
 
 The two options are not an either-or opposition but different stages on the same evolutionary path; together with §7.2's all-domain peer form they constitute a complete governance-form spectrum: **centralized → distributed center → peer-to-peer centerless**. As systems evolve from small to large, the governance form relaxes step by step while the underlying paradigm and domain model never change.
 
-## 8. Two Technical Systems: Engineering Landing Route
+## 8. Engineering Landing: Single-Java Modular Monolith + WASM Sandbox
 
 This section is the engineering landing route for Carrier One (enterprise software R&D).
 
-Most agent frameworks on the market do only "feature stacking" without engineering-architecture layering or language-boundary definition. As a result, late-stage projects suffer: messy business, messy performance, messy permissions, messy deployment, out-of-control iteration.
+Most agent frameworks on the market do only "feature stacking" without engineering-architecture layering or capability-boundary definition. As a result, late-stage projects suffer: messy business, messy performance, messy permissions, messy deployment, out-of-control iteration.
 
-This architecture reserved two production-grade landing systems from day one:
+This architecture lands as a **single-Java modular monolith**: one process, one deployment, internally partitioned into modules along future microservice boundaries (cross-module via interfaces only — a modular monolith), horizontally scalable as a cluster. It does not introduce Spring Cloud/Nacos/Gateway-style microservice infrastructure — in the enterprise-agent scenario, one process can carry all of governance / business / execution / orchestration / RAG / IM, and is friendliest to small and mid-size companies.
 
-- System A: Java + Golang hybrid layered architecture (steady enterprise edition)
-- System B: Golang full-stack unified architecture (lightweight cloud-native edition)
-
-The two systems are fully unified in architectural thinking, fully compatible in domain model, and aligned in capability — differing only in the division of labor of the underlying technology stack. This is also the key engineering difference distinguishing this architecture from projects that stay at feature demos: not only AI-paradigm innovation, but a clear long-term engineering evolution route reserved in advance.
-
-### 8.1 Underlying Differences Between the Two Languages (Core Basis for Architecture Design)
-
-All architectural layering, domain decomposition, and responsibility division essentially adapt to the two languages' strengths and avoid their weaknesses.
-
-| Dimension | Java / Spring ecosystem | Golang |
-| --- | --- | --- |
-| Character | Heavy, steady; strong complex-business modeling and enterprise governance | Light, fast; strong concurrency and cloud-native; natively suited to self-boot and WASM hot-plug |
-| Core strengths | Complex business governance, transactions, permissions, processes, domain modeling, standard systems; mature ecosystem and toolchain, suited to complex business domains requiring long-term iteration | goroutine lightweight concurrency model, static single-file deployment, millisecond start/stop, **WASM hot-plug** (runtimes such as wazero / wasmtime), extremely low ops cost — ideal for "massively dynamically generated, destroyed, and scheduled" self-boot tasks |
-| Weaknesses | Slow startup, heavy containers, cumbersome deployment, high concurrency-throughput cost; not suited to high-frequency lightweight scheduling and short-lived tasks | Complex business modeling, multi-layer process governance, and transaction systems less heavy and mature than Java; not suited to carrying extremely complex, frequently-changing enterprise core business rules |
-
-### 8.2 System A: Java-Golang Hybrid Architecture (Primary Enterprise Production Form)
-
-Core idea: **Java holds the rules, Golang holds the execution; Java does the control domain, Golang does the business self-boot domain.**
-
-#### Java carries: the privileged governance domain (global core layer)
-
-Give the stable, core, secure, governance capabilities to the Java Spring ecosystem:
-
-- Global permission validation, security baseline policies
-- User system, roles, resources, permissions — RBAC governance
-- Audit logs, risk interception, version locking
-- Workflow core rules, process approval, transaction consistency
-- System configuration, global parameters, whitelists, risk blacklists
-
-Architectural significance: the privileged governance domain must never be lightweight, casually restarted, or arbitrarily mutated. Java's steadiness better guards the "system security root," consistent with this architecture's axiom: core rules are forbidden from unconstrained self-boot tampering.
-
-#### Golang carries: business domains + self-boot runtime (dynamic execution layer)
-
-Give everything dynamic, variable, frequently scheduled, self-boot-generated, start-stop-destroy, and execution-related to Golang:
-
-- Agent task scheduling, queue consumption, batch execution
-- Dynamic plugin loading, self-boot capability registration and destruction
-- Multi-domain parallel execution, domain-isolated resource scheduling
-- Short-cycle automated tasks, temporary workflow execution
-- Cloud-native container deployment, elastic scaling
-
-Architectural significance: business domains need frequent growth, iteration, scaling, and destruction; Golang's lightweight high-speed characteristics naturally suit "controlled self-boot."
-
-#### Core value
-
-Java's steadiness fills the governance and safety baseline commonly missing in AI projects; Golang's lightness and speed fills the weak concurrency and hard self-boot of traditional Java projects. Control is steady, business is flexible; the center does not move, the periphery can self-boot and evolve.
-
-### 8.3 System B: Golang Full-Stack Architecture (Lightweight Cloud-Native Edition)
-
-Core idea: one Golang runtime, simultaneously and simply implementing control domain + business domains; unified stack, zero cross-stack cost.
-
-#### Applicable scenarios
-
-- Lightweight automation, personal/small-team clusters, and edge private deployment
-- Scenarios pursuing extremely low ops cost, single binary, no JVM dependency, and no ultra-complex permission governance
-
-#### Architectural trade-off
-
-The all-Go advantage is being unified, simple, light, fast, and cloud-native. The cost: you must self-encapsulate complex permission, audit, and process systems, and the ecosystem is less mature than Java.
-
-So this architecture positions:
-
-- All-Go version = lightweight paradigm validation & edge cloud-native form
-- Java + Go hybrid version = formal enterprise production-grade form
-
-### 8.4 Engineering Mechanism of Controlled Self-Boot: Coding via harness, Organization via WASM
+### 8.1 Engineering Mechanism of Controlled Self-Boot: Coding via harness, Self-Boot via the WASM Sandbox
 
 Controlled self-boot has two levels in engineering, each with its own mechanism:
 
@@ -530,10 +465,10 @@ flowchart TD
         H -. Hot-plug, ready to use .-> A1
     end
 
-    subgraph C2[Organization Layer · Work management WASM]
+    subgraph C2[Self-Boot Layer · WASM Sandbox]
         direction LR
-        A2[AI self-boot] -->|generates| W[Workflow components]
-        W -. Hot-plugged into Go runtime .-> R[Runtime execution]
+        A2[AI writes Go plugin] -->|TinyGo compile| W[WASM module]
+        W -. Sandbox hot-plug into Java process .-> R[Extism + Endive runtime executes]
     end
 
     GOV[Privileged Governance Domain · Approval / Audit / Version]
@@ -550,42 +485,52 @@ When AI writes code on the workbench, it uses harness (e.g., DeepSeek-Harness st
 - **Use and discard**: temporary tools are discarded after use, not polluting the workbench; genuinely valuable ones are preserved and reused
 - **Self-boot loop**: AI uses self-made tools to complete more complex tasks, then builds even newer tools within the task — tool capability spirals upward with tasks (see §3.2)
 
-#### Organization layer (work management): Go + WASM hot-plug plugins
+#### Self-boot layer: the WASM sandbox — isolated execution of AI-produced real code
 
-Business domains run as microservices. When AI self-boots to the work-organization level — adding or modifying **workflows**, process orchestration, pipeline stages — these structural components are implemented as **WASM plugins**:
+AI self-boot output is **real code** (Go tools / workflows / business components — "code-as-institution"): AI writes code → TinyGo compiles it to WASM → approval → hot-plugged into the WASM runtime embedded in the Java process (Extism + Endive, pure Java, zero native dependencies) and executed sandboxed. **The sandbox mechanism** is the core of this design; its pros and cons:
 
-- Compiled to WASM (WebAssembly) modules and **hot-plugged** into Go services through runtimes such as wazero / wasmtime / wasmedge — no restart, instant effect
-- WASM is inherently sandboxed (memory and host isolated) — exactly the engineering form of "domain isolation"
-- Plugins can be signed, versioned, and audited; with approval gates they form the complete "controlled self-boot" loop
-- Cross-language: AI can generate plugins in any language, compiled to WASM for unified integration
+**Pros**:
 
-In one sentence: **coding tools go through harness, work organization goes through WASM** — sandbox is isolation, hot-load is self-boot, signature and approval are control.
+- **Memory isolation**: WASM linear memory is isolated from the host — AI-produced code cannot cross into host memory
+- **Resource control**: execution time (timeout circuit breaking) and memory limits can be constrained — infinite loops and memory explosions are blocked inside the sandbox
+- **Cross-language unification**: AI writes plugins in any language (Go / Rust / AssemblyScript…), compiled to WASM for unified integration
+- **Hot-plug**: a new WASM version swaps in without restart and can be rolled back at any time
+- **Code-as-institution stands**: AI-produced real code goes through approval, versioning, sandboxed execution, and solidification into the system — not "parameter combinations," but code becoming the system's genes
 
-The two self-boot mechanisms each land in their own domain: coding-tool self-boot in the workbench (coding domain), workflow self-boot in the work-organization domain. **Self-boot is itself domain-separated** — each domain self-boots by its own mechanism, never crossing or interfering. This is exactly how the domain-separation idea manifests in self-boot mechanisms (see §3.3).
+**Cons**:
 
-#### The Complete Landing of Self-Boot
+- **One extra compile chain**: AI writes code → compiles to WASM (TinyGo) — one more step than running directly
+- **Performance cost**: WASM execution (pure-Java interpreter / bytecode translation) is slower than native; when volume is large, native compilation (Cranelift) can be switched in to approach native performance
+- **Constrained boundary**: a plugin cannot call arbitrary host APIs — only through host-exposed interfaces; capability is deliberately narrowed
+- **Communication cost**: plugin–host calls pass through JSON / ABI — simple functions are fast, complex objects carry serialization overhead
+
+**Why a sandbox instead of running Java code directly**: AI-generated code is untrusted — dynamically compiling it directly into the JVM offers no isolation (it could call `System.exit()`, exhaust the CPU, or reflect over arbitrary classes, and Java's SecurityManager has been removed). The WASM sandbox trades "a little convenience" for "reliable isolation," letting AI-produced code be safely solidified and run — this is the engineering landing of "controlled self-boot."
+
+### 8.2 The Controlled Loop Beyond the Sandbox
 
 Controlled self-boot converges in engineering to four supporting pieces:
 
-1. **The plugin capability registry (a simplified Nacos)**: lets the system know "how to call, and whom to call" — plugin registration, invocation contracts (OpenAI function schemas), discovery routing by capability key, and control-plane/runtime reconciliation. AI-written plugins are managed capability assets, not scattered scripts.
+1. **The plugin capability registry**: lets the system know "how to call, and whom to call" — plugin registration, invocation contracts (OpenAI function schemas), discovery routing by capability key, and version reconciliation. AI-written plugins are managed capability assets, not scattered scripts.
 2. **Write-and-run in the sandbox → approval for promotion**: a draft plugin trial-runs immediately in the sandbox's development state (the freedom of self-boot); promotion to an externally usable capability requires approval + versioning (the control of self-boot), and can be rolled back at any time.
 3. **Business-type plugins (the Feishu mini-services analogy)**: a plugin can be an "invoked tool," or it can be a **mini-service that subscribes to events and runs autonomously** (subscribing to IM group-message matches, task-status changes, flow-node entries, new documents), event-driven and self-executing — just like the host of mini-services on the Feishu platform.
 4. **Authorization as the boundary**: every action of AI is bounded by the data permissions of the authorizer (whoever clicks the flow gets their permissions used); enterprise content is read only through permission-bearing interfaces, with privilege escalation denied and audited — the freedom of self-boot always stays within the governance anchor's permission boundary.
 
-### 8.5 Unified Architecture Core Rules of the Two Systems (Key Normalization Design)
+The two self-boot mechanisms each land in their own domain: coding-tool self-boot in the workbench (coding domain), plugin-code self-boot in the self-boot layer (WASM sandbox domain). **Self-boot is itself domain-separated** — each domain self-boots by its own mechanism, never crossing or interfering. This is exactly how the domain-separation idea manifests in self-boot mechanisms (see §3.3).
 
-Whichever tech stack is chosen, the domain-separated controlled self-boot paradigm is entirely unchanged; this is the core confidence for long-term architecture evolution.
+### 8.3 Unified Architecture Core Rules
+
+Whichever runtime form it evolves into, the domain-separated controlled self-boot paradigm is entirely unchanged; this is the core confidence for long-term architecture evolution.
 
 - Domain model unchanged: privileged governance domain / business domain model unified
 - Self-boot constraints unchanged: all self-boot behavior must be controlled, auditable, interceptable
 - Artifact isolation unchanged: the production domain receives only results, not modifications
 - Dual-topology evolution unchanged: supports the center-converged form / peer-generalized form
 
-### 8.6 Technical System Conclusion
+### 8.4 Engineering Landing Conclusion
 
-1. The Java-Golang hybrid architecture is this project's primary production form, providing a unified industrialized solution to the three problem categories "AI runaway + missing enterprise governance + insufficient performance elasticity"
-2. The Golang full-stack architecture is the lightweight alternative, responsible for minimalist deployment, edge scenarios, and rapid paradigm validation
-3. Technology-stack layering is not arbitrary selection but deep thinking matching the domain-separated architecture's static-dynamic separation and governance-execution separation — dual-stack compatible, each doing its job, with engineering systematicity superior to single-stack frameworks
+1. The single-Java modular monolith + WASM sandbox is this project's landing form, providing a unified solution to the three problem categories "AI runaway + missing enterprise governance + deployment complexity" — one process carrying all capability, cluster-scalable, friendliest to small and mid-size companies
+2. The engineering form of controlled self-boot = code-as-institution: AI produces real code → WASM sandbox → approval and solidification — freedom and control are two sides of one coin in engineering
+3. Engineering systematicity: modular-monolith boundaries + WASM sandbox isolation + approval/version/rollback — not feature stacking
 
 The above systems are delivered in engineering as: self-boot fully traceable, interceptable, and rollback-able; production domains receive only approved artifacts — safety and production readiness are realized in engineering mechanisms.
 

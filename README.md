@@ -76,13 +76,12 @@ flowchart TD
 
 > 随着项目演进，此处将陆续补充安全模型、更多架构决策记录（ADR）等文档。
 
-## 🛠 技术栈（双栈策略）
+## 🛠 技术栈
 
-> 一套架构、两套落地技术体系，域模型与范式完全统一，详见[范式白皮书 §8 两套技术体系](docs/original-2026-paradigm.md#8-两套技术体系工程落地路线)
+> 单 Java 模块化单体，可集群部署，详见[范式白皮书 §8 工程落地](docs/original-2026-paradigm.md#8-工程落地单-java-模块化单体-wasm-沙箱)
 
-- 体系A（主推·企业版）：Java + Golang 混合 — Java 扛规则/特权管控域，Golang 扛执行/业务自举域
-- 体系B（轻量·云原生版）：Golang 全栈统一
-- 自举机制：编码工具经 **harness 热插拔**，工作流等组织组件经 **WASM 热插拔**（Go 运行时 wazero / wasmtime）
+- **单 Java 模块化单体**：Spring Boot 3.5 + Java 17，一个进程承载治理/业务/执行/编排/RAG/IM 全部能力，可集群横向扩容
+- **自举机制（代码制度）**：编码工具经 **harness 热插拔**；AI 产真实代码（Go）→ TinyGo 编译 WASM → 审批 → **Extism + Endive 沙箱热插拔**（一期纯 Java、零原生依赖）
 - 存储：OLTP、OLAP、文档库、Neo4j图库、MinIO对象存储
 - 集成：IM / 邮件系统、RAG、Git、大模型API、Penpot（开源 UI 设计）
 

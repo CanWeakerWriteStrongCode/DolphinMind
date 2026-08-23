@@ -75,13 +75,12 @@ flowchart TD
 
 > As the project evolves, this section will be supplemented with security models, more architecture decision records (ADR), and other documents.
 
-## 🛠 Technology Stack (Dual-Stack Strategy)
+## 🛠 Technology Stack
 
-> One architecture, two landing technical systems; the domain model and paradigm are fully unified — see [Whitepaper §8 Two Technical Systems](docs/original-2026-paradigm-en.md#8-two-technical-systems-engineering-landing-route)
+> Single-Java modular monolith, cluster-deployable — see [Whitepaper §8 Engineering Landing](docs/original-2026-paradigm-en.md#8-engineering-landing-single-java-modular-monolith-wasm-sandbox)
 
-- System A (primary · enterprise): Java + Golang hybrid — Java carries the rules/privileged governance domain, Golang carries execution/business self-boot domains
-- System B (lightweight · cloud-native): Golang full stack unified
-- Self-boot mechanism: coding tools via **harness hot-plug**; organizational components such as workflows via **WASM hot-plug** (Go runtimes wazero / wasmtime)
+- **Single-Java modular monolith**: Spring Boot 3.5 + Java 17 — one process carrying governance / business / execution / orchestration / RAG / IM, horizontally scalable as a cluster
+- **Self-boot mechanism (code-as-institution)**: coding tools via **harness hot-plug**; AI-produced real code (Go) → TinyGo → WASM → approval → **Extism + Endive sandbox hot-plug** (phase 1 pure-Java, zero native dependencies)
 - Storage: OLTP, OLAP, document stores, Neo4j graph DB, MinIO object storage
 - Integration: IM / email systems, RAG, Git, LLM APIs, Penpot (open-source UI design)
 
