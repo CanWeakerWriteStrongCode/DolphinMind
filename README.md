@@ -21,6 +21,18 @@ AI生成插件/代码制品，工作台仅输出产物，禁止直接操作生�
 
 整套架构围绕**受控自举**展开：AI 大胆自举、自产工具与工作流，但所有自举须经审批晋升、版本化、可回滚；治理锚点统一把守规则与边界，人在环中审批与定界。
 
+## 📄 文档
+
+- [架构白皮书](docs/original-2026-paradigm.md) ｜范式完整定义、产品定位与双栈技术体系，IP归档文档
+- [Architecture Whitepaper (English)](docs/original-2026-paradigm-en.md) ｜英文对照译本，内容与中文原文一致
+- [v0.1 实现计划](docs/v0.1-implementation-plan.md) ｜第一版实现计划：关键流程、模块总表、技术决策摘要、实施阶段
+- [v0.1 架构决策记录（ADR）](docs/v0.1-key-decisions.md) ｜第一版 16 条关键架构决策与风险清单
+- **白鳍智章（BaijiMind）** ｜产品与阐述本范式的文章共用此品牌名——中文名白鳍智章、代号 BaijiMind、别称海豚智章（DolphinMind）
+- [项目说明](docs/about-note.md) ｜设计启发、开发说明、未来规划
+- [Project Note (English)](docs/about-note-en.md) ｜英文对照版本
+
+> 随着项目演进，此处将陆续补充安全模型、更多架构决策记录（ADR）等文档。
+
 ## 🧭 架构总览
 
 核心思想一句话：**如何组织生产，才能让人与 AI 协调配合、各司其职，既支持大规模自主生产、高速自举进化，又全程可控、永不失控？**
@@ -64,18 +76,6 @@ flowchart TD
 - **目标与评估**：任务/目标声明可测完成条件，配与执行者分离的独立评估者判定达成——生成/评估分离，达成才晋升
 - 支持对接外部知识库、RAG、图数据库、对象存储
 - 可按需新增业务分域，支持后续向分布式集群场景演进
-
-## 📄 文档
-
-- [架构白皮书](docs/original-2026-paradigm.md) ｜范式完整定义、产品定位与双栈技术体系，IP归档文档
-- [Architecture Whitepaper (English)](docs/original-2026-paradigm-en.md) ｜英文对照译本，内容与中文原文一致
-- [v0.1 实现计划](docs/v0.1-implementation-plan.md) ｜第一版实现计划：关键流程、模块总表、技术决策摘要、实施阶段
-- [v0.1 架构决策记录（ADR）](docs/v0.1-key-decisions.md) ｜第一版 16 条关键架构决策与风险清单
-- **白鳍智章（BaijiMind）** ｜产品与阐述本范式的文章共用此品牌名——中文名白鳍智章、代号 BaijiMind、别称海豚智章（DolphinMind）
-- [项目说明](docs/about-note.md) ｜设计启发、开发说明、未来规划
-- [Project Note (English)](docs/about-note-en.md) ｜英文对照版本
-
-> 随着项目演进，此处将陆续补充安全模型、更多架构决策记录（ADR）等文档。
 
 ## 🛠 技术栈
 

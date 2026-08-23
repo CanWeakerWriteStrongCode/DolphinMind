@@ -20,6 +20,18 @@ AI generates plugins/code artifacts; the workbench only outputs artifacts and is
 
 The whole architecture revolves around **controlled self-boot**: AI self-boots boldly, producing its own tools and workflows, but all self-boot output must pass approval-based promotion, versioning, and rollback; the governance anchor uniformly holds the rules and boundaries, with humans in the loop approving and defining boundaries.
 
+## 📄 Documentation
+
+- [Architecture Whitepaper (Chinese original)](docs/original-2026-paradigm.md) | the authoritative original whitepaper
+- [Architecture Whitepaper (English)](docs/original-2026-paradigm-en.md) | full paradigm definition, product positioning, and dual-stack technical systems — IP archive document (translation)
+- [v0.1 Implementation Plan (Chinese)](docs/v0.1-implementation-plan.md) | first-version implementation plan: key flows, module list, technical decision summary, implementation phases
+- [v0.1 Architecture Decision Records / ADR (Chinese)](docs/v0.1-key-decisions.md) | first-version 16 key architecture decisions and risk checklist
+- **白鳍智章 (BaijiMind)** | the unified brand name of both the product (codename BaijiMind) and the article expounding this paradigm
+- [Project Note (Chinese)](docs/about-note.md) | design inspiration, development notes, future plans
+- [Project Note (English)](docs/about-note-en.md) | design inspiration, development notes, future plans
+
+> As the project evolves, this section will be supplemented with security models, more architecture decision records (ADR), and other documents.
+
 ## 🧭 Architecture Overview
 
 The core idea in one sentence: **how should production be organized so that humans and AI coordinate and play their distinct roles — supporting large-scale autonomous production and high-speed self-boot evolution, while remaining fully controllable and never spiraling out of control?**
@@ -63,18 +75,6 @@ flowchart TD
 - **Goals and evaluation**: tasks/goals declare measurable completion conditions, paired with an independent evaluator separate from the executor — generator/evaluator separation; promotion only upon achievement
 - Supports external knowledge bases, RAG, graph databases, and object storage
 - Business domains can be added on demand; supports evolution toward distributed cluster scenarios
-
-## 📄 Documentation
-
-- [Architecture Whitepaper (Chinese original)](docs/original-2026-paradigm.md) | the authoritative original whitepaper
-- [Architecture Whitepaper (English)](docs/original-2026-paradigm-en.md) | full paradigm definition, product positioning, and dual-stack technical systems — IP archive document (translation)
-- [v0.1 Implementation Plan (Chinese)](docs/v0.1-implementation-plan.md) | first-version implementation plan: key flows, module list, technical decision summary, implementation phases
-- [v0.1 Architecture Decision Records / ADR (Chinese)](docs/v0.1-key-decisions.md) | first-version 16 key architecture decisions and risk checklist
-- **白鳍智章 (BaijiMind)** | the unified brand name of both the product (codename BaijiMind) and the article expounding this paradigm
-- [Project Note (Chinese)](docs/about-note.md) | design inspiration, development notes, future plans
-- [Project Note (English)](docs/about-note-en.md) | design inspiration, development notes, future plans
-
-> As the project evolves, this section will be supplemented with security models, more architecture decision records (ADR), and other documents.
 
 ## 🛠 Technology Stack
 
