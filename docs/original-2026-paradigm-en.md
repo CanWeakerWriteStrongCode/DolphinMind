@@ -100,6 +100,26 @@ Compensation does not grow linearly with the gap — the larger the gap, the mor
 
 Context length M appears in both formulas with opposite directions: raising M raises the capability boundary, while cutting memory compensation yet driving forward cost super-linearly — hence there is an economically optimal memory length, the balance point between capability gains and memory cost. This also provides a formulaic footnote for "humans are good at quickly picking a low-risk path while holding the whole picture, while AI doing the same is uneconomical": **the human "holding the whole picture" memory is built in, at zero compensation cost** (long-term memory and hierarchical abstraction are naturally free), whereas AI's global view must be reconstructed on the spot, paying compensation each time — the economic gap originates here.
 
+### 3.1.5 Decision Attribution: Accuracy, Risk, and Total Expected Cost
+
+§3.1.2 argued that responsibility is a function of capability — the capability gap decides "who can bear the consequences at lower cost." But the other half of "taking responsibility" is **accuracy**: who makes the decision is not only about who can bear the consequences, but also about whose **total expected cost** is lowest. The total expected cost of one decision = decision cost + expected accident loss:
+
+E[Cost_X] = D(X) + (1 − p_X) · L
+
+where **D(X)** = decision cost (electricity and time + decision-safety cost, §3.1.4), **p** = accuracy, and **L** = accident cost (who bears the consequences and how painful). (1 − p) · L is the **expected accident loss** — when accuracy is high enough, it is **priced**, not absolutely prohibited.
+
+**Accuracy is a function of the capability margin**. Let R = the compute a decision requires:
+
+p = g(C / R), with p → ceiling (≈ 1) when C ≫ R
+
+When AI's capability boundary far exceeds the compute a single decision requires (C ≫ R), the bottleneck effect does not bind, accuracy approaches the ceiling, and the expected accident loss approaches zero — delegating the decision to AI then becomes economically optimal: humans trade "accepting a low-probability accident" for "the economy of delegation." In practice, AI writing code and putting it straight into live testing while a human only scans the abstraction layers and code structure is exactly the case where accuracy is high enough that the human is willing to buy the residual risk.
+
+**The two ends together unify decision attribution**: decisions with small R and large capability margin go to AI, which is cheap and highly accurate; decisions with enormous R that require whole-picture planning go to humans, who hold built-in memory at zero compensation cost while AI must reconstruct the whole picture each time and pay compensation (§3.1.4, the double-edged M). Attribution is decided by total-expected-cost minimization, not by the a priori stance of "whether machines should decide at all."
+
+**This completes the nature of the decision-safety cost in §3.1.4**: it is exactly **paying to raise p and lower L** — boundary reports, tests, approval, and rollback push accuracy toward the ceiling and press accident cost down to an acceptable level, making "delegation" an economically viable option.
+
+**Accidents are unavoidable; remediation must be economical**. Accuracy p cannot reach 1 for any agent — both humans and AI have accidents. So the key is not only pushing p toward the ceiling, but also pressing down the **cost of remediating** an accident: decompose accident cost as L = L₀·ρ, where **L₀** = the raw loss an accident causes and **ρ** = the remediation factor (for the same accident, the more economical the remediation, the smaller ρ), giving E = D + (1 − p)·L₀·ρ. **p has a ceiling; ρ can be pressed down continually by engineering** — **replay logs** are the key to pressing ρ: they let an accident be localized to the failure point at low cost, rolled back to a safe version, and audited and reviewed afterward, turning irreversible loss into reversible process cost. Replay logs serve two purposes at once: pressing ρ (accident remediation) and supplementing the memory-compensation D in §3.1.4 (context replay). The governance anchor's audit logs, version locking, and rollback thus gain a second meaning: **control and delegation are isomorphic — the more economical the remediation, the more acceptable the delegation.**
+
 ### 3.2 A Dialectical Core: Productive Forces and Relations of Production
 
 AI's self-boot — self-producing tools, self-organizing processes — is the **productive force** of system evolution; the governance layer (central principles) is the **relations of production** constraining how the productive forces operate. The two form a dialectical relationship:
