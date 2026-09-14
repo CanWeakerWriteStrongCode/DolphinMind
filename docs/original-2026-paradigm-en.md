@@ -362,7 +362,7 @@ All running functions, modules, and production environments in the system are de
 
 ### Principle 2: Self-boot is encouraged, but must be controlled (controlled self-boot)
 
-AI's autonomous evolution is a **core value of this architecture, not an object to be guarded against**: AI generating code, adding features, modifying workflows, and iterating on its own capabilities during process execution is collectively called "self-boot." Self-boot takes **plugin-based harness** as its landing form (see §6.3): AI uses these tools to do work while continuously improving the tools themselves through the plugin mechanism — using tools and, in the process, making better tools. In engineering, coding tools go through **harness hot-plug** and workflow and other organizational components through **WASM hot-plug** (see §8.4). **Freedom and control are two sides of one coin**: AI is encouraged to self-boot boldly — this is the engine of system evolution; but all self-boot behavior passes permission validation, security review, and version locking — this is the guarantee against loss of control, preventing AI from making arbitrary changes, harming itself, or escalating privileges. The faster the self-boot, the more the governance anchor must hold the direction: evolution speed and governance intensity are directly proportional — this is the complete meaning of "controlled self-boot" (see §3.2).
+AI's autonomous evolution is a **core value of this architecture, not an object to be guarded against**: AI generating code, adding features, modifying workflows, and iterating on its own capabilities during process execution is collectively called "self-boot." Self-boot takes **plugin-based harness** as its landing form (see §6.3): AI uses these tools to do work while continuously improving the tools themselves through the plugin mechanism — using tools and, in the process, making better tools. In engineering, coding tools go through **harness hot-plug** and workflow and other organizational components through the **container sandbox** (see §8.4). **Freedom and control are two sides of one coin**: AI is encouraged to self-boot boldly — this is the engine of system evolution; but all self-boot behavior passes permission validation, security review, and version locking — this is the guarantee against loss of control, preventing AI from making arbitrary changes, harming itself, or escalating privileges. The faster the self-boot, the more the governance anchor must hold the direction: evolution speed and governance intensity are directly proportional — this is the complete meaning of "controlled self-boot" (see §3.2).
 
 ### Principle 3: The system needs a governance anchor (a unified source of order, itself evolvable)
 
@@ -441,7 +441,7 @@ The domain separation of this architecture is vertically layered; the core is a 
 
 - **Governance layer (privileged governance domain)**: uniformly controls permissions, review, interception, and configuration; the system security root; the only highest-trust domain in the system
 - **Pipeline layer (business domains)**: business domains form the R&D "production line" — product → frontend → backend → testing → deployment, analogous to building an industrial production pipeline. The pipeline can be both **orchestrated** and **self-organized**: orchestration defines stages and flow via the governance layer and humans for stability; self-organization lets AI reshape flows within controlled boundaries for evolution
-- **Self-boot tool layer (plugin-based harness, workbench)**: the workbench hosts harness and self-produced tools. AI writes code on the workbench, using harness tools (e.g., DeepSeek-Harness style) to do work, and **self-produces new coding tools** — using tools while improving them; these coding tools register into the workbench as **harness hot-plug tools**, recyclable, preservable, and disposable on demand. Another level of self-boot is **work organization**: when AI adds or modifies **workflows**, they hot-plug into the runtime as **WASM plugins** (see §8.4)
+- **Self-boot tool layer (plugin-based harness, workbench)**: the workbench hosts harness and self-produced tools. AI writes code on the workbench, using harness tools (e.g., DeepSeek-Harness style) to do work, and **self-produces new coding tools** — using tools while improving them; these coding tools register into the workbench as **harness hot-plug tools**, recyclable, preservable, and disposable on demand. Another level of self-boot is **work organization**: when AI adds or modifies **workflows**, they run in the sandbox as **container plugins** (see §8.4)
 
 Layering is not limited to three tiers; it can be extended to multiple layers by business complexity. Layers and domains interact through the unified domain model and controlled contracts, and all self-boot behavior is uniformly audited by the governance layer. When a domain's local principles conflict with the governance layer's central principles, the same controlled contract escalates to the governance layer for adjudication (adjudication criteria in §3.3).
 
@@ -458,7 +458,7 @@ flowchart TD
 
     subgraph L3[Self-Boot Tool Layer · Workbench harness]
         direction LR
-        T1[Coding tools harness] --- T2[Workflow components WASM]
+        T1[Coding tools harness] --- T2[Workflow components container]
     end
 
     L1 -. Distributes rules / intercepts risk .-> L2
@@ -533,7 +533,7 @@ flowchart LR
 
 The two options are not an either-or opposition but different stages on the same evolutionary path; together with §7.2's all-domain peer form they constitute a complete governance-form spectrum: **centralized → distributed center → peer-to-peer centerless**. As systems evolve from small to large, the governance form relaxes step by step while the underlying paradigm and domain model never change.
 
-## 8. Engineering Landing: Single-Java Modular Monolith + WASM Sandbox
+## 8. Engineering Landing: Single-Java Modular Monolith + Container Sandbox
 
 This section is the engineering landing route for Carrier One (enterprise software R&D).
 
@@ -541,7 +541,7 @@ Most agent frameworks on the market do only "feature stacking" without engineeri
 
 This architecture lands as a **single-Java modular monolith**: one process, one deployment, internally partitioned into modules along future microservice boundaries (cross-module via interfaces only — a modular monolith), horizontally scalable as a cluster. It does not introduce Spring Cloud/Nacos/Gateway-style microservice infrastructure — in the enterprise-agent scenario, one process can carry all of governance / business / execution / orchestration / RAG / IM, and is friendliest to small and mid-size companies.
 
-### 8.1 Engineering Mechanism of Controlled Self-Boot: Coding via harness, Self-Boot via the WASM Sandbox
+### 8.1 Engineering Mechanism of Controlled Self-Boot: Coding via harness, Self-Boot via the Container Sandbox
 
 Controlled self-boot has two levels in engineering, each with its own mechanism:
 
@@ -553,10 +553,10 @@ flowchart TD
         H -. Hot-plug, ready to use .-> A1
     end
 
-    subgraph C2[Self-Boot Layer · WASM Sandbox]
+    subgraph C2[Self-Boot Layer · Container Sandbox]
         direction LR
-        A2[AI writes Go plugin] -->|TinyGo compile| W[WASM module]
-        W -. Sandbox hot-plug into Java process .-> R[Extism + Endive runtime executes]
+        A2[AI writes real code] -->|builds image| W[Container image]
+        W -. Runs in the sandbox after approval .-> R[docker-java sandbox executes]
     end
 
     GOV[Privileged Governance Domain · Approval / Audit / Version]
@@ -573,40 +573,40 @@ When AI writes code on the workbench, it uses harness (e.g., DeepSeek-Harness st
 - **Use and discard**: temporary tools are discarded after use, not polluting the workbench; genuinely valuable ones are preserved and reused
 - **Self-boot loop**: AI uses self-made tools to complete more complex tasks, then builds even newer tools within the task — tool capability spirals upward with tasks (see §3.2)
 
-#### Self-boot layer: the WASM sandbox — isolated execution of AI-produced real code
+#### Self-boot layer: the container sandbox — isolated execution of AI-produced real code
 
-AI self-boot output is **real code** (Go tools / workflows / business components — "code-as-institution"): AI writes code → TinyGo compiles it to WASM → approval → hot-plugged into the WASM runtime embedded in the Java process (Extism + Endive, pure Java, zero native dependencies) and executed sandboxed. **The sandbox mechanism** is the core of this design; its pros and cons:
+AI self-boot output is **real code** (Go tools / workflows / business components — "code-as-institution"): AI writes code → first tested on **KVM** (development-stage trial runs) → builds a container image → then tested on **Docker** (test-stage validation, close to the production form) → approval → finally **goes to production** (runs in a container sandbox managed by docker-java). **The sandbox mechanism** is the core of this design; its pros and cons:
 
 **Pros**:
 
-- **Memory isolation**: WASM linear memory is isolated from the host — AI-produced code cannot cross into host memory
-- **Resource control**: execution time (timeout circuit breaking) and memory limits can be constrained — infinite loops and memory explosions are blocked inside the sandbox
-- **Cross-language unification**: AI writes plugins in any language (Go / Rust / AssemblyScript…), compiled to WASM for unified integration
-- **Hot-plug**: a new WASM version swaps in without restart and can be rolled back at any time
+- **Process-level isolation**: namespaces + cgroups + seccomp isolate AI-produced code from the host OS — infinite loops, memory explosions, and arbitrary syscalls are blocked by the operating system inside the container, stronger than an in-process sandbox
+- **Full language capability**: AI writes ordinary Go (no WASM subset restriction) or any language, with the full standard library and dependencies
+- **Resource control**: CPU / memory caps (--memory/--cpus) and execution timeouts (circuit breaking) — runaway behavior is locked down by cgroups
+- **Ops-familiar and natively versioned**: Docker images are the industry standard; image tags are versions, images are immutable, and rollback is just switching tags
 - **Code-as-institution stands**: AI-produced real code goes through approval, versioning, sandboxed execution, and solidification into the system — not "parameter combinations," but code becoming the system's genes
 
 **Cons**:
 
-- **One extra compile chain**: AI writes code → compiles to WASM (TinyGo) — one more step than running directly
-- **Performance cost**: WASM execution (pure-Java interpreter / bytecode translation) is slower than native; when volume is large, native compilation (Cranelift) can be switched in to approach native performance
-- **Constrained boundary**: a plugin cannot call arbitrary host APIs — only through host-exposed interfaces; capability is deliberately narrowed
-- **Communication cost**: plugin–host calls pass through JSON / ABI — simple functions are fast, complex objects carry serialization overhead
+- **One extra build chain**: AI writes code → builds an image — one more step than running directly
+- **Start/stop overhead**: containers take hundreds of milliseconds to seconds to start and stop, heavier than in-process hot-plug; version switching = container restart (rollback-able)
+- **Cross-process communication**: plugin–host interaction goes over HTTP / sidecar, one more layer than in-process function calls
+- **A container runtime is required**: deployment depends on a Docker daemon (or K8s), and the runtime must be maintained in production
 
-**Why a sandbox instead of running Java code directly**: AI-generated code is untrusted — dynamically compiling it directly into the JVM offers no isolation (it could call `System.exit()`, exhaust the CPU, or reflect over arbitrary classes, and Java's SecurityManager has been removed). The WASM sandbox trades "a little convenience" for "reliable isolation," letting AI-produced code be safely solidified and run — this is the engineering landing of "controlled self-boot."
+**Why a sandbox instead of running Java code directly**: AI-generated code is untrusted — dynamically compiling it directly into the JVM offers no isolation (it could call `System.exit()`, exhaust the CPU, or reflect over arbitrary classes, and Java's SecurityManager has been removed). The container sandbox trades "one more layer of orchestration" for "reliable isolation," letting AI-produced code be safely solidified and run — this is the engineering landing of "controlled self-boot."
 
 ### 8.2 The Controlled Loop Beyond the Sandbox
 
 Controlled self-boot converges in engineering to four supporting pieces:
 
 1. **The plugin capability registry**: lets the system know "how to call, and whom to call" — plugin registration, invocation contracts (OpenAI function schemas), discovery routing by capability key, and version reconciliation. AI-written plugins are managed capability assets, not scattered scripts.
-2. **Write-and-run in the sandbox → approval for promotion**: a draft plugin trial-runs immediately in the sandbox's development state (the freedom of self-boot); promotion to an externally usable capability requires approval + versioning (the control of self-boot), and can be rolled back at any time.
+2. **Build-and-run in the sandbox → approval for promotion**: a draft plugin trial-runs immediately in the container's development state (the freedom of self-boot); promotion to an externally usable capability requires approval + versioning (the control of self-boot), and can be rolled back at any time.
 3. **Business-type plugins (the Feishu mini-services analogy)**: a plugin can be an "invoked tool," or it can be a **mini-service that subscribes to events and runs autonomously** (subscribing to IM group-message matches, task-status changes, flow-node entries, new documents), event-driven and self-executing — just like the host of mini-services on the Feishu platform.
 4. **Authorization as the boundary**: every action of AI is bounded by the data permissions of the authorizer (whoever clicks the flow gets their permissions used); enterprise content is read only through permission-bearing interfaces, with privilege escalation denied and audited — the freedom of self-boot always stays within the governance anchor's permission boundary.
 5. **Goals and evaluation (measurable completion conditions + independent evaluator)**: tasks and goals declare measurable completion conditions — "do X until Y without Z" — so "achieved or not" can be judged rather than felt; and are paired with an **independent evaluator** separate from the executor (reading only boundary reports, tests, and global metrics to judge "achieved / not achieved"); the executor cannot self-assess "I'm done" (generator/evaluator separation, see §6.4). Only upon achievement does progress proceed (promotion / closure); otherwise the next round of self-boot begins, with evaluation fully audited.
 
 (Looking ahead: were constitutional AI to mature, the automated pre-review could add "AI self-checks against the central principle," intercepting out-of-boundary output at the source and further lightening human review — but the backstop remains approval and the governance anchor, see §3.2.4.)
 
-The two self-boot mechanisms each land in their own domain: coding-tool self-boot in the workbench (coding domain), plugin-code self-boot in the self-boot layer (WASM sandbox domain). **Self-boot is itself domain-separated** — each domain self-boots by its own mechanism, never crossing or interfering. This is exactly how the domain-separation idea manifests in self-boot mechanisms (see §3.3).
+The two self-boot mechanisms each land in their own domain: coding-tool self-boot in the workbench (coding domain), plugin-code self-boot in the self-boot layer (container sandbox domain). **Self-boot is itself domain-separated** — each domain self-boots by its own mechanism, never crossing or interfering. This is exactly how the domain-separation idea manifests in self-boot mechanisms (see §3.3).
 
 ### 8.3 Unified Architecture Core Rules
 
@@ -619,9 +619,9 @@ Whichever runtime form it evolves into, the domain-separated controlled self-boo
 
 ### 8.4 Engineering Landing Conclusion
 
-1. The single-Java modular monolith + WASM sandbox is this project's landing form, providing a unified solution to the three problem categories "AI runaway + missing enterprise governance + deployment complexity" — one process carrying all capability, cluster-scalable, friendliest to small and mid-size companies
-2. The engineering form of controlled self-boot = code-as-institution: AI produces real code → WASM sandbox → approval and solidification — freedom and control are two sides of one coin in engineering
-3. Engineering systematicity: modular-monolith boundaries + WASM sandbox isolation + approval/version/rollback — not feature stacking
+1. The single-Java modular monolith + container sandbox is this project's landing form, providing a unified solution to the three problem categories "AI runaway + missing enterprise governance + deployment complexity" — one process carrying all capability, cluster-scalable, friendliest to small and mid-size companies
+2. The engineering form of controlled self-boot = code-as-institution: AI produces real code → container sandbox → approval and solidification — freedom and control are two sides of one coin in engineering
+3. Engineering systematicity: modular-monolith boundaries + container sandbox isolation + approval/version/rollback — not feature stacking
 4. LLM cost and usage management (model routing / key pool / token accounting / cost reports) carries §3.1.4's usage cost — both forward cost and memory compensation (context replay / retrieval / multi-round recomposition) are measurable and optimizable
 
 The above systems are delivered in engineering as: self-boot fully traceable, interceptable, and rollback-able; production domains receive only approved artifacts — safety and production readiness are realized in engineering mechanisms.
@@ -672,7 +672,7 @@ In 2025–2026, academia and industry saw a wave of independent convergence arou
 
 - **Production organization as the primary lens**: most work focuses on AI safety governance (preventing loss of control); this paradigm focuses on how production systems are organized — pipelines, units, and governance
 - **Controlled self-boot + governance anchor at peer level**: self-boot is not an auxiliary capability but an architectural pillar equal to governance
-- **Self-boot domain-separated, two-channel landing**: coding tools via harness hot-plug; workflow and other organizational components via WASM hot-plug, each landing in its own domain
+- **Self-boot domain-separated, two-channel landing**: coding tools via harness hot-plug; workflow and other organizational components via the container sandbox, each landing in its own domain
 - **Unified across carrier scales**: from enterprise software R&D to socialized robot production, the same paradigm reproduces self-similarly
 - **Productive forces / relations of production dialectic**: self-boot and governance ascend spirally in alternating negation, not static equilibrium; and the concrete transformation mechanism is given — **two interlocking PDCA loops**: the productive-forces loop (tool introspection → new tools) and the relations-of-production loop (observer/audit → rule revision), each controlled and interlocking; the friction signals from the productive forces' landing colliding with old rule boundaries drive the relations to catch up (see §3.2.1)
 - **The conceptual core is isomorphic to established scholarship**: double-loop learning (Argyris & Schön), the law of requisite variety (Ashby), dissipative structures (Prigogine), directed evolution (Darwin/Campbell) — this paradigm is the mechanized landing of these mature laws, not the invention of new academic concepts (see §3.2.2)

@@ -56,17 +56,17 @@ flowchart TD
     BIZ -->|Outputs code / plugin artifacts| GIT[(Artifacts / Git)]
 
     WB -. AI self-produced tools (harness) need approval .-> GOV
-    BIZ -. Workflow self-boot (WASM) needs approval .-> GOV
+    BIZ -. Workflow self-boot (container sandbox) needs approval .-> GOV
     GOV -. Distributes security rules uniformly .-> BIZ
     WB --x|Artifacts out only, no direct production access| PROD[(Production)]
 ```
 
-> How to read: the privileged governance domain uniformly validates security; business domains are mutually isolated and evolve independently; both coding-tool (harness) and workflow (WASM) self-boot need approval; the workbench only outputs artifacts and never touches production.
+> How to read: the privileged governance domain uniformly validates security; business domains are mutually isolated and evolve independently; both coding-tool (harness) and workflow (container sandbox) self-boot need approval; the workbench only outputs artifacts and never touches production.
 
 ## ✨ Key Features
 
 - Domain-separated security isolation model, with the privileged governance domain uniformly handling permission, version, and risk validation
-- Integrates with IM / email bots; messages become requirements and knowledge base
+- Integrates with IM / email bots; messages become requirements and knowledge base (**multi-platform IM adapter architecture, borrowing AstrBot**: unified message model + adapter registry; Feishu in v0.1, WeCom / QQ / DingTalk in phase 2)
 - Built-in lightweight visual workflow orchestration; configurable product, coding, testing, deployment stages
 - Integrates multiple LLM coding capabilities; outputs plugin code, manually revised before committing to Git
 - **Controlled self-boot**: AI-produced tools / workflows go through approval-based promotion, versioning, and rollback — freedom to evolve and governance control are two sides of one coin
@@ -79,8 +79,8 @@ flowchart TD
 
 > Single-Java modular monolith, cluster-deployable — see [Whitepaper §8 Engineering Landing](docs/original-2026-paradigm-en.md#8-engineering-landing-single-java-modular-monolith-wasm-sandbox)
 
-- **Single-Java modular monolith**: Spring Boot 3.5 + Java 17 — one process carrying governance / business / execution / orchestration / RAG / IM, horizontally scalable as a cluster
-- **Self-boot mechanism (code-as-institution)**: coding tools via **harness hot-plug**; AI-produced real code (Go) → TinyGo → WASM → approval → **Extism + Endive sandbox hot-plug** (phase 1 pure-Java, zero native dependencies)
+- **Single-Java modular monolith**: Spring Boot 3.5 + Java 17 — one process carrying governance / business / execution / orchestration / RAG / IM, horizontally scalable as a cluster; modules decoupled via a **RocketMQ domain-event bus** (event-driven messaging, easy to split and compose)
+- **Self-boot mechanism (code-as-institution)**: coding tools via **harness hot-plug**; AI-produced real code (Go) → **KVM test → Docker test → production** — runs in a **Docker container sandbox** after approval (resource caps / timeout / no credentials)
 - Storage: OLTP, OLAP, document stores, Neo4j graph DB, MinIO object storage
 - LLM cost/usage management: model routing, key pool, token accounting, cost reports — including decision-safety cost (verification/approval overhead for low-risk safe outward decisions; carries §3.1.4)
 - Integration: IM / email systems, RAG, Git, LLM APIs, Penpot (open-source UI design)
