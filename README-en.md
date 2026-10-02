@@ -66,7 +66,7 @@ flowchart TD
 ## ✨ Key Features
 
 - Domain-separated security isolation model, with the privileged governance domain uniformly handling permission, version, and risk validation
-- Integrates with IM / email bots; messages become requirements and knowledge base (**multi-platform IM adapter architecture, borrowing AstrBot**: unified message model + adapter registry; Feishu in v0.1, WeCom / QQ / DingTalk in phase 2)
+- Integrates with IM / email bots; messages become requirements and knowledge base (**dual-path multi-platform IM capture**: a Koishi gateway for platforms with open APIs — Feishu / WeCom / DingTalk / QQ official; **desktop OCR capture** for platforms without APIs such as personal WeChat — employee-authorized, read-only, clipboard-assisted sending; unified `ImMessage` contract fed in over the message bus)
 - Built-in lightweight visual workflow orchestration; configurable product, coding, testing, deployment stages
 - Integrates multiple LLM coding capabilities; outputs plugin code, manually revised before committing to Git
 - **Controlled self-boot**: AI-produced tools / workflows go through approval-based promotion, versioning, and rollback — freedom to evolve and governance control are two sides of one coin
