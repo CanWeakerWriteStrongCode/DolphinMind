@@ -1,4 +1,4 @@
-# domain-separated-self-boot-agent-runtime
+# DolphinMind
 
 > **BaijiMind · 白鳍智章 (a.k.a. DolphinMind · 海豚智章) — Domain-Separated Controlled Self-Boot Agent Runtime**
 > Domain-Separated Controlled Self-Boot Agent Architecture · Trust-domain isolation, privileged governance domain, plugin-based self-boot · MIT License

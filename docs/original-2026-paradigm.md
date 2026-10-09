@@ -14,7 +14,7 @@
 
 文档日期：2026-08-21
 
-对应开源项目：domain-separated-self-boot-agent-runtime
+对应开源项目：DolphinMind
 
 ## 2. 架构正式名称与定位
 
