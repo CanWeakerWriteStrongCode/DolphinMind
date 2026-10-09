@@ -1,32 +1,135 @@
-# Project-Centric Intelligence (PCI)
+# Project-Centric Intelligence (PCI) · 纲领
 
-> 项目中心智能：让项目成为长期智能的主体，让 AI 模型成为可替换的智能引擎。
+> **项目中心智能**：让项目成为长期智能的主体，让 AI 模型成为可替换的智能引擎。
+>
+> 本纲领只写**思维框架**——谁是谁、谁持什么权、控制点在哪——不涉及任何实现。
 
-## 一句话定义
+## 一、一句话定义
 
-PCI 认为长期智能的基本主体不是 AI Agent，而是 Project。项目持续拥有知识、状态、经验、策略和文档，LLM 只是可替换引擎。通过执行—反馈—经验—验证—策略—再执行的闭环，项目不断积累智能、自组织生长，最终从完成单个任务成长为能驱动公司的数字组织。
+长期智能的基本主体不是 AI Agent，而是 **Project**。项目持续拥有知识、状态、经验、策略与文档；LLM 只是可替换的引擎。通过「执行—反馈—经验—验证—策略—再执行」的闭环，项目不断积累智能、自组织生长，从完成单个任务，成长为能驱动公司的数字组织。
 
-## 核心命题
-
-- **Project as Subject**：项目是长期主体。
-- **Model as Engine**：模型是可替换引擎。
-- **Project Continual Intelligence**：项目因过去而改变未来行为。
-- **Experience Capitalization**：经验成为项目的数字资本。
-- **Dual-Mode Production**：ReAct 探索，Workflow 固化。
-- **Self-Evolution**：进化引导文件、工作流和元规则。
-- **Documentation as Protocol**：文档是项目智能的接口。
-- **Validation as Selection Pressure**：无验证，不入策略。
-
-## 与 Goal 模式区别
+与 Goal 模式的区别：
 
 ```text
 Goal：目标 → 执行 → 完成 → 结束。
-PCI：Project → Goal → Work → Feedback → Experience → Validation → Strategy → 新 Goal。
+PCI： Project → Goal → Work → Feedback → Experience → Validation → Strategy → 新 Goal。
 ```
 
-Goal 是项目当前要做的事；Project 才是长期智能主体。
+Goal 是项目当前要做的事；**Project 才是长期智能主体**。
 
-## 系统循环
+## 二、核心命题
+
+**Project as Subject** — 项目是长期主体。
+**Model as Engine** — 模型是可替换引擎。
+**Project Continual Intelligence** — 项目因过去而改变未来行为。
+**Experience Capitalization** — 经验成为项目的数字资本。
+**Dual-Mode Production** — ReAct 探索，Workflow 固化。
+**Self-Evolution** — 进化引导文件、工作流和元规则。
+**Documentation as Protocol** — 文档是项目智能的接口。
+**Validation as Selection Pressure** — 无验证，不入策略。
+
+本纲领补充三条：
+
+**Subject as Legal Person（主体即法人）** — 主体是权利与责任的承载者；人可以是主体，AI 也可以是主体。
+**Controller is Swappable（控制者可变）** — 审核者不必是人；把独立的 AI 放到门后，仍是受控。
+**Body Self-Boots, Brain is Governed（身可自举，脑受控）** — 产物可以自主生长；宪法、架构与约束必须走提案。
+
+## 三、主体论：主体即法人
+
+这是全篇的基石。
+
+**主体 = 权利与责任的承载者。** 借法人概念：能持有权利、承担责任的"人格"，不一定是自然人。在项目中，主体可以是：
+
+- **人**（自然人）
+- **AI**（一个持续的角色，而非某一次调用）
+- **群**（集体人格）
+- **任务**（如定时任务，自配权限）
+
+**但不是每个"干活的 AI"都是主体。** 关键区分：
+
+- **主体**：持有权限、承担责任。审核 AI、定时任务、群，都是主体。
+- **代理人**：不持有自己的权利，以某个主体的名义、借该主体的权限行动。**执行 AI 是代理人**——所以"AI 无独立权限"这句话只对代理人成立；主体本身是有权限的。
+
+由此推得四条：
+
+1. **主体 ≠ 模型。** 主体持续存在，引擎随时可换——这正是 Model as Engine 的制度形态。审计记账在**主体**上，不在模型版本上：换了引擎，账还记在同一个主体名下。
+2. **主体可委托。** 授权即边界，本质是委托关系——主体把权限授予代理人，代理人只在边界之内行动。
+3. **主体要登记。** 如同法人注册，每个主体一张簿：标识、类型（人 / AI / 群 / 任务）、权限、**兜底人**。
+4. **兜底人不可缺。** 法人背后有实际控制人；**AI 主体背后也必须挂一个兜底人**。责任的形式可以转移给 AI 主体，但兜底的链条不能断——追溯下去，必须落到人。
+
+**这一节也是 PCI 第一命题的精确化：Project as Subject 里的那个 Subject，就是法人意义上的主体。** 项目是一个主体——它持有权限、承担责任、持续存在、引擎可换。
+
+## 四、人机分工：三权
+
+主体之间如何分工权力？答案是三权：
+
+- **立法（归人）** — 定宪法、定结构约束、定验证标准。这就是"人的日常只有两件事"的所在：**出目标、给结构建议**。人不必逐次介入，但规则的最终修订权归人。
+- **行政 / 事权（归 AI）** — 干活与执行。AI 在这里全权：规划、执行、反思、积累经验、形成策略、改进工作流。
+- **司法 / 审核（可人可 AI）** — 审批与裁决。**可以外包给独立的 AI，乃至给它高权**——因为它被宪法约束、且全程可审计。
+- **财政 / 人事（归管理层，AI 不介入）** — AI 不碰这两项，只向高层给建议。在系统里，它们退化为**权限边界**：AI 的权限集里根本没有"花钱"与"加人"，越界即拒。
+
+一句话：**AI 全权行政，人握立法，司法独立且可交给 AI。**
+
+**这是演进，不是开关。** 门后先坐人；等审核 AI 成熟、放权意愿到位，再换成独立于人的主体。白皮书所说的"宪法式 AI 成熟后启用"，正是这一步。
+
+## 五、系统结构：嘴 · 手 · 脑 · 身
+
+- **嘴 · 前台 AI** — 与人对话、把意图翻译成动作、把状态翻译成人能懂的东西、调度后台。**它没有执行权，不下场。** 它最重要的一项职责是**澄清真正的终点**：人给的是字面要求，它能问，问到"真正要什么"再动手；模糊的命令因此被逼成**可测的完成条件**。
+- **手 · 后台线程** — 分两类：**探索线程**（只读，随时并行，去摸"现在是什么样"）与**执行线程**（写，受令才开）。
+- **脑 · 项目文档** — 项目的**意义层**：项目"知道自己是谁、要什么、受什么约束"（见第十节）。
+- **身 · 代码与制品** — 项目的**实现层**。约束与各类图，是脑与身之间的桥。
+
+**翻译不是独立的机制**，它是"嘴"的沟通能力：读脑与状态，现场渲染成图。这里要分清**两类图**——
+
+- `.pci/` 里维护的正式图（数据流程图、时序图）：持久，属于脑。
+- 对话里现场画的图：临时，帮人此刻理解，画完即弃，不进脑。
+
+**概念组件**（框架的器官，非实现）：
+
+- **Project Core** — 项目作为一个主体的核心。
+- **Document System** — 脑（`.pci/`）的文档体系。
+- **Experience Store / Strategy Engine** — 经验的沉淀与策略的形成。
+- **Goal Generator** — 目标的产生与选择。
+- **Model Router** — 引擎的替换与路由（Model as Engine 的落点）。
+- **Validation Engine** — 验证与选择压力。
+- **Self-Evolution Engine** — 对引导文件、工作流与元规则的进化。
+- **ReAct Runtime / Workflow Runtime** — 双模生产的两个运行时。
+- **Audit & Governance / Metrics Scorecard** — 审计、治理与度量。
+
+## 六、门槛：命令门与两道门
+
+**命令门**：写，必须落在授权主体的权限边界内，且归属到一个主体明确表达的意图。对人是"下了令"；对定时任务是"任务定义本身就是它的意图"。
+
+在此之上，生产流程有两道门：
+
+- **门① 认领** — 自组织通道（loop）的提案是**无主**的：没人发令，它就没有主体、没有权限。人（或审核主体）点头，等于**给它派了一个主体**，从此它才在权限边界内执行。这一道门堵死了"无人发令却能写"的口子——**loop 根本无权写身，只能提案**。
+- **门② 上线** — 制品进入生产，永远要过一道门。这是"生产只出不进"的落地。
+
+```text
+loop 路径： 自动找 goal → 出设计文档 ──[门① 认领]──→ 写代码 + 测试 ──[门② 上线]──→ 生产
+命令路径： 人下令（门① 已过）──────────────────────→ 写代码 + 测试 ──[门② 上线]──→ 生产
+```
+
+**门后坐的不是"人"，而是"审核主体"。** 现在填人，将来填独立的审核 AI——**换坐位不改结构**。
+
+**给高权的正确姿势是"按模式分级"，不是一刀切**：落入已知模式的自动批，不落模式的新东西上报给人。高权因此落在高频、低风险的大多数上，人只接住剩下的少数。
+
+## 七、制衡两轴
+
+分权不是两条并列原则，而是两个**正交的轴**：
+
+- **横轴 · 职能分权** — 人权、财权、事权不能握在同一主体手里。防的是**自己给自己扩权**：能干活 + 能加人 + 能花钱 = 无限膨胀。在本纲领的定位下（财政 / 人事归管理层），这一轴大多**退化为权限边界**：AI 的权限集里根本没有那两项。
+- **纵轴 · 执行 / 检查分离** — 干活的 ≠ 检查的。防的是**自己给自己打合格**：执行者不能自评"我做完了"，判定必须交给独立的评估者。
+
+关键：**两轴都靠结构，不靠自觉。** 分权不能是"我们约定执行线程别去自评"，而必须是权限层面同一个身份根本拿不到两种权力——靠自觉的那叫倡议，不叫制衡。
+
+若把审核交给 AI，它有三条硬约束：
+
+1. **必须独立于提案者 / 执行者**——loop 提案，绝不能 loop 自批。
+2. **权力天花板 = 它所代理主体的权限**——超出该主体权限的提案，它无权批，必须上人。
+3. **不能碰立法**——否则它等于自己给自己放权，前两条被一键绕过。
+
+## 八、系统循环与 loop 模式
 
 1. Load Project Core
 2. Generate or Select Goal
@@ -39,67 +142,69 @@ Goal 是项目当前要做的事；Project 才是长期智能主体。
 9. Update Docs & State
 10. Next Goal
 
-## 双模生产
+**loop 模式**是这条循环的常驻形态，也是那条"无人发令的自组织通道"：它自动找 goal、产出**设计文档**，**到此为止**。它不自动写身，不碰脑——再往下要过门①。
 
-- ReAct：探索态，灵活，文档引导，处理新问题。
-- Workflow：固化态，快速，稳定，可复制，规模化。
-- 结晶：ReAct 成功解法 → 验证 → 固化为 Workflow。
-- 退化：Workflow 失效 → 退回 ReAct → 修复 → 重新结晶或废弃。
+## 九、双模生产
 
-## 文档体系
+- **ReAct**：探索态，灵活，文档引导，处理新问题。
+- **Workflow**：固化态，快速，稳定，可复制，规模化。
+- **结晶**：ReAct 的成功解法 → 验证 → 固化为 Workflow。
+- **退化**：Workflow 失效 → 退回 ReAct → 修复 → 重新结晶或废弃。
+
+## 十、文档即协议
+
+`.pci/` 是项目智能的接口，也是"脑"的载体——**多层次工程文档**：项目背景、目标、ADR、架构设计、代码约束、数据流程图、时序图……
 
 ```text
 .pci/
-  constitution/
-  strategy/
-  org/
-  knowledge/
-  state/
-  goals/
-  experience/
-  strategies/
-  models/
-  audit/
-  metrics/
+  constitution/   宪法 · 元规则
+  strategy/       结构 · 架构设计 · 约束
+  org/            项目内的主体与角色
+  knowledge/      项目背景 · 领域知识
+  state/          当前状态
+  goals/          目标（含待认领的提案）
+  experience/     经验
+  strategies/     策略
+  models/         引擎路由
+  audit/          审计
+  metrics/        度量
 ```
 
-## 经验 Schema 核心字段
+文档不是附属记录，而是**协议**：主体之间、人与 AI 之间，都通过它交互。
+
+## 十一、经验与策略
+
+**经验 Schema**：
 
 ```text
-id, type, scope, status, context, action, outcome, evidence, causal_hypothesis, strategy_candidate, confidence, valid_until, source_model, created_at, updated_at
+id, type, scope, status, context, action, outcome, evidence,
+causal_hypothesis, strategy_candidate, confidence, valid_until,
+source_model, created_at, updated_at
 ```
 
-## 策略 Schema 核心字段
+**策略 Schema**：
 
 ```text
-id, trigger, preconditions, action, validation, rollback, scope, confidence, priority, cost, owner, version, status, evidence, expires
+id, trigger, preconditions, action, validation, rollback, scope,
+confidence, priority, cost, owner, version, status, evidence, expires
 ```
 
-## 验证证据等级
+经验是项目的数字资本；策略是被验证筛选后固化下来的经验。
+
+## 十二、验证即选择压力
+
+无验证，不入策略。证据分级：
 
 - **L0** 日志
 - **L1** 单元测试
-- **L2** CI/集成测试
+- **L2** CI / 集成测试
 - **L3** 人工 review
 - **L4** 线上指标
 - **L5** A/B、因果推断、回溯测试
 
-## 重要组件
+**选择压力的来源可以更换**：可以是人的审批，可以是证据本身，也可以是一个独立的审核主体。等级越高越接近"可自动放行"，越低越需要外部判断——这正是"控制者可变"的落点。
 
-- Project Core
-- Document System
-- Experience Store
-- Strategy Engine
-- Goal Generator
-- Model Router
-- Validation Engine
-- Self-Evolution Engine
-- ReAct Runtime
-- Workflow Runtime
-- Audit & Governance
-- Metrics Scorecard
-
-## 生长路线
+## 十三、生长路线
 
 - 0 单任务
 - 1 单 repo 自维护
@@ -108,29 +213,21 @@ id, trigger, preconditions, action, validation, rollback, scope, confidence, pri
 - 4 组织化
 - 5 公司 OS
 
-## 快速开始
+## 十四、与"分域受控自举"的关系
 
-建 .pci/，写六个文件：
+PCI 与《分域受控自举智能体架构》是同一套内核的两种形态——都在做**变异—选择—保留**：
 
-```text
-constitution/constitution.md
-state/current.yaml
-goals/active.yaml
-experience/exp-001.yaml
-strategies/strat-001.yaml
-models/router.yaml
-```
+- 范式：**审批驱动**，控制者是人。
+- PCI：**验证驱动**，控制者是证据 / 独立审核主体。
 
-## 最小 CLI
+区别只在**选择压力由谁给**。因此两篇并不冲突，而是**自治度谱系上的两点**：范式偏收敛（人把关），PCI 偏高自治（AI 自举、证据筛选、审核主体坐门）。范式中已有的机制，在 PCI 里各有对应——
 
-```bash
-pci run --goal "修复登录超时" --model claude
-pci reflect --run 001
-pci validate --exp 001
-pci promote --exp 001
-pci next
-```
+| 分域受控自举 | PCI |
+| --- | --- |
+| 分域 | **主体** |
+| 授权即边界 | **权限边界 / 委托** |
+| 独立评估者 | **执行 / 检查分离** |
+| 制品强隔离（只出不进） | **门② 上线** |
+| 集权审批（人把关） | **审核主体（可人可 AI）** |
 
-## 一句话
-
-PCI 让项目成为长期智能主体；ReAct 负责探索，Workflow 负责生产；自进化引擎不断修改两者，使项目从完成单个任务，成长为能自组织、能驱动公司的数字组织。
+**一句话**：项目成为长期智能主体；ReAct 负责探索，Workflow 负责生产；自进化引擎不断修改两者，使项目从完成单个任务，成长为能自组织、能驱动公司的数字组织。
