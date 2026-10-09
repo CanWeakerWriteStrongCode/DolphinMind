@@ -23,17 +23,16 @@ Goal 是项目当前要做的事；**Project 才是长期智能主体**。
 **Model as Engine** — 模型是可替换引擎。
 **Project Continual Intelligence** — 项目因过去而改变未来行为。
 **Experience Capitalization** — 经验成为项目的数字资本。
-**Dual-Mode Production** — ReAct 探索，Workflow 固化。
+**Crystallization Ladder（结晶阶梯）** — ReAct 探索 → Workflow 固化过程 → 域结晶：过程连同承载它的域一起固化。
 **Self-Evolution** — 进化引导文件、工作流和元规则。
 **Documentation as Protocol** — 文档是项目智能的接口。
 **Validation as Selection Pressure** — 无验证，不入策略。
 
-本纲领补充四条：
+本纲领补充三条：
 
 **Subject as Legal Person（主体即法人）** — 主体是权利与责任的承载者；人可以是主体，AI 也可以是主体。
 **Controller is Swappable（控制者可变）** — 审核者不必是人；把独立的 AI 放到门后，仍是受控。
 **Body Self-Boots, Brain is Governed（身可自举，脑受控）** — 产物可以自主生长；宪法、架构与约束必须走提案。
-**Domain Crystallization（域结晶）** — 固化不止于过程：过程连同承载它的域一起固化，长出一个新的自治单元（新的主体）。
 
 ## 三、主体论：主体即法人
 
