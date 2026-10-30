@@ -255,6 +255,7 @@ flowchart TD
 
 - [项目中心智能纲领（PCI）](docs/project-centric-intelligence.md) —— 思维框架：主体论、三权、结晶阶梯、文档协议、生长路线
 - [分域受控自举智能体架构 · 原创范式白皮书（2026）](docs/original-2026-paradigm.md) —— 底座范式的完整定义、产品定位与技术体系
+- [消息层 v0.1 实施方案](docs/message-layer-plan.md) —— IM / 邮箱 / 论坛的统一消息模型、采集管道、存储端口与后台回显（方案评审中）
 
 ## 🚧 Roadmap
 

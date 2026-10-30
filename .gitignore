@@ -1,1 +1,6 @@
 /.idea/
+/.vscode/
+/.qoder/
+/node_modules/
+/dist/
+/build/
